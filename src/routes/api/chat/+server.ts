@@ -41,6 +41,7 @@ export const POST = (async ({ request }) => {
         ),
       output: z.string().describe("The full output of the previous command printed in stdout."),
     }),
+    maxTokens: 10000,
     messages,
   });
 
