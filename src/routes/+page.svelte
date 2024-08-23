@@ -2,11 +2,14 @@
   import { useChat } from "@ai-sdk/svelte";
 
   const { input, handleSubmit, messages } = useChat();
+
+  $: console.log($messages);
 </script>
 
 <main>
   <ul>
-    {#each $messages as message}
+    {#each $messages.entries() as [index, message] (index)}
+      {@const previousMessage = $messages.at(index - 1)}
       <li>
         <pre>{message.role === "user" ? "$ " : ""}{message.content}</pre>
       </li>
