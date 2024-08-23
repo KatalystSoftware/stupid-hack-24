@@ -15,11 +15,7 @@
   <form onsubmit={handleSubmit}>
     <p>
       <span>$</span>
-      <input
-        class="w-[80ch] border-0 caret-lime-500 focus-visible:outline-0"
-        type="text"
-        bind:value={$input}
-      />
+      <input class="w-[80ch] border-0 focus-visible:outline-0" type="text" bind:value={$input} />
     </p>
   </form>
 </main>
