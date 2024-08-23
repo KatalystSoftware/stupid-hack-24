@@ -1,46 +1,25 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
+  import { useChat } from "@ai-sdk/svelte";
 
-  const { data }: { data: PageData } = $props();
-
-  const previousCommands = [
-    { type: "in", text: "echo 'Hello, world!'" },
-    { type: "out", text: "Hello, world!" },
-    { type: "in", text: "tree" },
-    {
-      type: "out",
-      text: `.
-├── src
-│   ├── app.css
-│   ├── app.html
-│   ├── app.ts
-│   ├── routes
-│   │   ├── $layout.svelte
-│   │   ├── $page.svelte
-│   │   └── index.svelte
-│   └── service-worker.ts
-├── static
-│   ├── favicon.ico
-│   └── robots.txt
-└── package.json`,
-    },
-  ];
-
-  $effect(() => {});
+  const { input, handleSubmit, messages } = useChat();
 </script>
 
 <main>
   <ul>
-    {#each previousCommands as command}
+    {#each $messages as message}
       <li>
-        <pre>{command.type === "in" ? "$ " : ""}{command.text}</pre>
+        <pre>{message.role === "user" ? "$ " : ""}{message.content}</pre>
       </li>
     {/each}
   </ul>
-  <form onsubmit={console.log}>
+  <form onsubmit={handleSubmit}>
     <p>
       <span>$</span>
-      <input class="border-0 caret-lime-500 focus-visible:outline-0" type="text" />
+      <input
+        class="w-[80ch] border-0 caret-lime-500 focus-visible:outline-0"
+        type="text"
+        bind:value={$input}
+      />
     </p>
   </form>
 </main>

@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@ai-sdk/openai": "^0.0.53",
+    "@ai-sdk/svelte": "^0.0.43",
     "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
     "@sveltejs/adapter-auto": "^3.2.4",
     "@sveltejs/kit": "^2.5.24",
