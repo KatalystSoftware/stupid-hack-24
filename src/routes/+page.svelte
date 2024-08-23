@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { useChat } from "@ai-sdk/svelte";
   import { parse } from "partial-json";
 
@@ -6,6 +7,16 @@
 
   $: lastAssistantMessage = $messages.findLast((m) => m.role === "assistant");
   $: nextPrompt = parse(lastAssistantMessage?.content ?? "null")?.prompt ?? "$";
+
+  onMount(() => {
+    const observer = new ResizeObserver(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    observer.observe(document.body);
+
+    return () => observer.disconnect();
+  });
 </script>
 
 <main>
