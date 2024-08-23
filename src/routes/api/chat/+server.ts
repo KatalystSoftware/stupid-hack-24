@@ -32,7 +32,7 @@ export const POST = (async ({ request }) => {
   messages.unshift({ role: "system", content: systemPrompt });
 
   const result = await streamObject({
-    model: openai("gpt-4o-mini-2024-07-18"),
+    model: openai("gpt-4o-2024-08-06"),
     schema: z.object({
       prompt: z
         .string()
