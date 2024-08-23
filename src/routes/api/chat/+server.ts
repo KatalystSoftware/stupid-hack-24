@@ -36,9 +36,9 @@ export const POST = (async ({ request }) => {
       prompt: z
         .string()
         .describe(
-          "Terminal prompt containing the current directory, username and hostname of the machine.",
+          "Terminal prompt containing the current directory, username and hostname of the machine. In interactive mode, the prompt should match the environment. In Python: >>>, in Node.js: >, etc.",
         ),
-      output: z.string().describe("Output of the previous command."),
+      output: z.string().describe("The full output of the previous command printed in stdout."),
     }),
     messages,
   });
