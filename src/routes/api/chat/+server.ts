@@ -19,6 +19,7 @@ output: Documents
 
 IMPORTANT: Always reply with purely plain text, no markdown or code blocks.
 IMPORTANT: Absolutely never reply with anything other than the command output.
+IMPORTANT: Never describe the output, just return it as is.
 `;
 
 export const POST = (async ({ request }) => {
