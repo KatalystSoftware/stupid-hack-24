@@ -19,7 +19,9 @@
   });
 
   onMount(() => {
-    function onKeyDown() {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+
       const input = document.querySelector("input");
       if (input) input.focus();
     }
