@@ -17,6 +17,16 @@
 
     return () => observer.disconnect();
   });
+
+  onMount(() => {
+    function onKeyDown() {
+      const input = document.querySelector("input");
+      if (input) input.focus();
+    }
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => window.removeEventListener("keydown", onKeyDown);
+  });
 </script>
 
 <main>
