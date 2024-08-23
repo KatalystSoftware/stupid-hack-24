@@ -4,7 +4,6 @@
 
   const { input, handleSubmit, messages, isLoading } = useChat({ streamProtocol: "text" });
 
-  $: console.log($messages);
   $: lastAssistantMessage = $messages.findLast((m) => m.role === "assistant");
   $: nextPrompt = parse(lastAssistantMessage?.content ?? "null")?.prompt ?? "$";
 </script>
