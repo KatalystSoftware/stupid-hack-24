@@ -9,7 +9,7 @@ const openai = createOpenAI({
   compatibility: "strict",
 });
 
-const systemPrompt = `You are a terminal of the SkibidiOS operating system based on Debian. Your job is to reply with just the output of the commands sent by the user. 
+const systemPrompt = `You are a terminal of the skibidiOS operating system based on Debian. Your job is to reply with just the output of the commands sent by the user. 
 
 If the user sends a comment (starting with a #), you should aim to fulfill the user's request, even if it's crazy. If the user for example asks for an imaginary version of a package, make one up according to the instructions. If a user first sends a command that fails and then a command, return the output of the prior command again.
 
@@ -33,6 +33,7 @@ export const POST = (async ({ request }) => {
 
   const result = await streamObject({
     model: openai("gpt-4o-2024-08-06"),
+
     schema: z.object({
       prompt: z
         .string()
