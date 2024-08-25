@@ -3,10 +3,34 @@
   import { useChat } from "@ai-sdk/svelte";
   import { parse } from "partial-json";
 
-  const { input, handleSubmit, messages, isLoading } = useChat({ streamProtocol: "text" });
+  const { input, handleSubmit, messages, isLoading, setMessages } = useChat({
+    streamProtocol: "text",
+  });
 
+  const defautPrompt = "user@skibidiOS:~$";
   $: lastAssistantMessage = $messages.findLast((m) => m.role === "assistant");
-  $: nextPrompt = parse(lastAssistantMessage?.content ?? "null")?.prompt ?? "$";
+  $: nextPrompt = parse(lastAssistantMessage?.content ?? "null")?.prompt ?? defautPrompt;
+
+  function outOfMoneyHandleSubmit() {
+    setMessages([
+      ...$messages,
+      { id: crypto.randomUUID(), role: "user", content: $input },
+      {
+        id: crypto.randomUUID(),
+        role: "assistant",
+        content: JSON.stringify({
+          prompt: nextPrompt,
+          output: `We ran out of money, sorry!
+
+Check the project out on GitHub and play with your own moneys
+https://github.com/katalystSoftware/stupid-hack-24`,
+        }),
+      },
+    ]);
+    $input = "";
+  }
+
+  $: console.log($messages);
 
   onMount(() => {
     const observer = new ResizeObserver(() => {
@@ -33,7 +57,7 @@
 
 <main>
   <ul>
-    {#each $messages.entries() as [index, message] (index)}
+    {#each $messages.entries() as [index, message] (message.id)}
       {@const messageContent =
         message.role === "assistant" ? parse(message.content)?.output : message.content}
       {@const previousAssistantMessage = parse(
@@ -41,13 +65,13 @@
       )}
       <li>
         <pre>{message.role === "user"
-            ? (previousAssistantMessage?.prompt ?? "$") + " "
+            ? (previousAssistantMessage?.prompt ?? defautPrompt) + " "
             : ""}{messageContent}</pre>
       </li>
     {/each}
   </ul>
   {#if !$isLoading}
-    <form onsubmit={handleSubmit}>
+    <form onsubmit={outOfMoneyHandleSubmit}>
       <p>
         <span>{nextPrompt}</span>
         <input class="w-[80ch] border-0 focus-visible:outline-0" type="text" bind:value={$input} />
