@@ -30,8 +30,6 @@ https://github.com/katalystSoftware/stupid-hack-24`,
     $input = "";
   }
 
-  $: console.log($messages);
-
   onMount(() => {
     const observer = new ResizeObserver(() => {
       window.scrollTo(0, document.body.scrollHeight);
